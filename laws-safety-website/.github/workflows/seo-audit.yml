@@ -1,0 +1,83 @@
+name: SEO audit
+
+# Runs the production SEO audit without needing a terminal.
+#
+# Why this exists: the audit has to reach the live site, which rules out running
+# it from an environment with no outbound network. A GitHub runner has both the
+# repo and internet access, so this is the reliable place for it.
+#
+# Trigger it from the Actions tab (Run workflow), or let the weekly run catch
+# regressions on its own. A failing run emails repo watchers, so no news is
+# genuinely good news.
+
+on:
+  # Primary trigger: Vercel reports a successful production deploy, so the
+  # audit runs against the build that just went live. Auditing on `push`
+  # instead would race the deploy and report the previous build's state.
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: 'Site to audit'
+        required: false
+        default: 'https://www.laws-safety.com'
+  schedule:
+    # Mondays 07:30 UTC, after the 07:00 IndexNow cron has run. A safety net in
+    # case a deploy event is missed, and it catches drift on the live site that
+    # no deploy caused.
+    - cron: '30 7 * * 1'
+
+jobs:
+  audit:
+    name: Crawl production and check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # On a deployment_status event, only act on a successful production deploy.
+    # Preview deploys have protection enabled and would 302 to the SSO endpoint.
+    if: >-
+      github.event_name != 'deployment_status' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment_status.environment == 'Production')
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # The audit talks HTTP to the live site; it does not build or run the app,
+      # so the install only needs to be enough for the scripts to execute.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: SEO audit
+        id: seo
+        run: npm run seo:audit -- --base="${{ inputs.base || 'https://www.laws-safety.com' }}" --json=seo-report.json
+
+      # Structural check: reachability, click depth and in-content inbound links.
+      # It answers the question seo-audit cannot — whether a crawler can get to
+      # every page and how far it has to walk — so a regression here fails the
+      # run the same way a broken page does.
+      - name: Site architecture
+        if: always()
+        run: npm run seo:architecture -- --base="${{ inputs.base || 'https://www.laws-safety.com' }}" --json=link-graph.json --verbose
+
+      # Duplication is a slower-moving signal, so a failure here is reported but
+      # does not fail the run on its own.
+      - name: Template duplication
+        if: always()
+        continue-on-error: true
+        run: npm run seo:similarity -- --base="${{ inputs.base || 'https://www.laws-safety.com' }}"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-report
+          path: |
+            seo-report.json
+            link-graph.json
+          if-no-files-found: ignore
+          retention-days: 30

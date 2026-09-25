@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design-system tokens (mirrors the Laws Safety design system tokens.json). */
+:root {
+  --surface: #ffffff;
+  --surface-raised: #f4f6fa;
+  --surface-deep: #e9edf4;
+  --ink: #232f45;
+  --ink-muted: #4a5773;
+  --line: rgba(35, 47, 69, 0.12);
+  --line-gold: rgba(212, 175, 55, 0.4);
+  --gold: #d4af37;
+  --gold-deep: #c9962b;
+  --gold-ink: #866d1d;
+  --focus: #4171a8;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: var(--ink);
+  background: var(--surface);
+  font-family: var(--font-sora), 'Avenir Next', 'Segoe UI', sans-serif;
+  font-feature-settings: 'kern' 1;
+}
+
+/* The navy hero and footer are the dark theme; text and rules flip with them. */
+.theme-dark {
+  --surface: #0a1426;
+  --surface-raised: #0d1b33;
+  --surface-deep: #070e1c;
+  --ink: #e6ecf7;
+  --ink-muted: #a9b7d0;
+  --line: rgba(255, 255, 255, 0.1);
+  --gold-ink: #f2c75c;
+  --focus: #4c90c7;
+  color: var(--ink);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Uppercase tracked label: gold on navy, gold-ink on white. */
+  .eyebrow {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+  }
+  .theme-dark .eyebrow {
+    color: var(--gold);
+  }
+}
+
+/* Focus ring: 2px solid, 2px offset, blue on light and blue-bright on navy. */
+*:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (max-width: 375px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* ─── Hero motion (from the brand canvas), all reduced-motion aware ───── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes ls-breathe {
+    0%,
+    100% {
+      opacity: 0.78;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.045);
+    }
+  }
+  @keyframes ls-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .ls-glow {
+    animation: ls-breathe 7s ease-in-out infinite;
+  }
+  .ls-ticks {
+    animation: ls-spin 160s linear infinite;
+    transform-origin: 50% 50%;
+  }
+}
+
+/* ─── Long-form article typography ─────────────────────────────────────── */
+.article-body {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.article-body p {
+  margin: 0 0 1.1em;
+}
+.article-body ul,
+.article-body ol {
+  margin: 0 0 1.1em;
+  padding-left: 1.4em;
+}
+.article-body ul {
+  list-style: disc;
+}
+.article-body ol {
+  list-style: decimal;
+}
+.article-body li {
+  margin: 0 0 0.5em;
+  padding-left: 0.2em;
+}
+.article-body li::marker {
+  color: var(--gold-deep);
+}
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-gold);
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: #4171a8;
+}
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin: 0 0 1.4em;
+}
+.article-body th,
+.article-body td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6em 0.75em;
+  border-bottom: 1px solid var(--line);
+}
+.article-body th {
+  font-weight: 600;
+  background: var(--surface-raised);
+}
