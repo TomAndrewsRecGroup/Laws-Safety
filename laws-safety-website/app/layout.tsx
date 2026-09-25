@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     default: `${PERSON_NAME} | ${SITE_NAME}`,
     template: `%s${BRAND_SUFFIX}`,
   },
-  description: `The health and safety record of ${PERSON_NAME}: the disciplines he has delivered, the sectors and places he has worked across London and the South East, and his guides to the law.`,
+  description: `${PERSON_NAME} CMIOSH, chartered health and safety professional in Kent: what he has done since 2011, what he knows, and his guides to the law.`,
   applicationName: SITE_NAME,
   authors: [{ name: PERSON_NAME, url: BASE_URL }],
   creator: PERSON_NAME,
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     url: BASE_URL,
     siteName: SITE_NAME,
     title: `${PERSON_NAME} | ${SITE_NAME}`,
-    description: `The health and safety record of ${PERSON_NAME}, across London and the South East.`,
+    description: `${PERSON_NAME} CMIOSH, chartered health and safety professional working across London and the South East.`,
     firstName: PROFILE.givenName,
     lastName: PROFILE.familyName,
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${PERSON_NAME}, ${SITE_NAME}` }],
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: `${PERSON_NAME} | ${SITE_NAME}`,
-    description: `The health and safety record of ${PERSON_NAME}, across London and the South East.`,
+    description: `${PERSON_NAME} CMIOSH, chartered health and safety professional working across London and the South East.`,
     images: [OG_IMAGE],
   },
   icons: {
