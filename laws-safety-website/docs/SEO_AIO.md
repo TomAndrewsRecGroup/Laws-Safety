@@ -23,7 +23,7 @@ JSON-LD is rendered into the server HTML (`components/JsonLd.tsx`), not injected
 - **`/llms.txt`** and **`/llms-full.txt`** (`app/llms.txt/route.ts`, `app/llms-full.txt/route.ts`): citable facts about Stephen, every discipline, sector, location and guide with its URL, the FAQ, and an explicit statement of what may be cited and how to attribute it. Generated from the content model.
 - **Key facts blocks** (`components/KeyTakeaways.tsx`) at the top of every discipline, sector and guide page: three to six self-contained, quotable sentences tagged `data-speakable`.
 - **Native `<details>` FAQs** (`components/FaqList.tsx`): every answer is in the HTML, tagged `data-speakable`, and mirrored in the page's `FAQPage` schema.
-- **`robots.txt`** names GPTBot, ChatGPT-User, OAI-SearchBot, Google-Extended, anthropic-ai, ClaudeBot, PerplexityBot, cohere-ai, CoherePBot, Amazonbot, Applebot-Extended, Meta-ExternalAgent and YouBot explicitly, and allows `/api/og` so the cards render in previews.
+- **`robots.txt`** names GPTBot, ChatGPT-User, OAI-SearchBot, Google-Extended, anthropic-ai, ClaudeBot, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, cohere-ai, CoherePBot, Amazonbot, Applebot-Extended, Meta-ExternalAgent, YouBot, DuckAssistBot, MistralAI-User and CCBot explicitly, and allows `/api/og` so the cards render in previews.
 
 ## Crawling and indexing
 

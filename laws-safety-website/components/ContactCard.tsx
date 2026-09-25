@@ -68,7 +68,7 @@ export function ContactBand() {
             <p className="eyebrow mb-3">Get in touch</p>
             <h2 className="text-balance text-[1.75rem] font-semibold leading-tight text-white sm:text-[2.125rem]">Get in touch with {PERSON_NAME}</h2>
             <p className="mt-3 text-pretty text-base leading-relaxed text-ink-light-muted sm:text-lg">
-              By email, by phone, or through the form. The office is at Nepicar Park, Wrotham, beside junction 2 of the M20.
+              A question about health and safety on your site or in your business? Email, phone or use the form. The office is at Nepicar Park, Wrotham, beside junction 2 of the M20.
             </p>
             <ul className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-light-soft">
               <li>

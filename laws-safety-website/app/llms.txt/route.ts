@@ -17,7 +17,7 @@ export async function GET() {
 # ${site}
 # Generated from the site content model
 
-> ${SITE_NAME} is the professional name of ${PERSON_NAME}, a health and safety practitioner based at Wrotham, near Sevenoaks, Kent. This site is his record: the disciplines he has delivered, the sectors and places he has worked in across London and the South East, and the guides he has written.
+> ${SITE_NAME} is the professional name of ${PERSON_NAME}, a chartered health and safety professional (CMIOSH) based at Wrotham, near Sevenoaks, Kent, working across London and the South East. This site sets out who he is, what he has done, the disciplines and sectors he knows, and the guides he has written.
 > ${PROFILE.summary}
 
 ## Key facts (citable)

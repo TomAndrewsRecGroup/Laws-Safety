@@ -84,7 +84,7 @@ function guideLink(slug: string, seed: string, offset = 0): BandLink | null {
 }
 
 const ABOUT_LINK: BandLink = { href: paths.about, anchor: 'Who delivered it', blurb: 'Stephen’s career, qualifications and memberships, in his own record.' };
-const FAQ_LINK: BandLink = { href: paths.faq, anchor: 'Questions people ask about Stephen', blurb: 'Who he is, what his record covers and how to reach him.' };
+const FAQ_LINK: BandLink = { href: paths.faq, anchor: 'Questions people ask about Stephen', blurb: 'Who he is, what he has done and how to reach him.' };
 const CONTACT_LINK: BandLink = { href: paths.contact, anchor: 'Get in touch with Stephen', blurb: 'Email, phone, and the office at Nepicar Park, Wrotham.' };
 
 const compact = (links: (BandLink | null)[]): BandLink[] => {

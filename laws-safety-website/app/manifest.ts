@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: SITE_NAME,
     short_name: SITE_NAME,
-    description: `The health and safety record of ${PERSON_NAME}: disciplines, sectors and places across London and the South East.`,
+    description: `${PERSON_NAME} CMIOSH, chartered health and safety professional working across London and the South East.`,
     start_url: '/',
     display: 'standalone',
     background_color: '#0a1426',

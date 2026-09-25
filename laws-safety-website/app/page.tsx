@@ -5,27 +5,24 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 import Header from '@/components/Header';
 import JsonLd from '@/components/JsonLd';
 import { Emblem, Wordmark, Diamond } from '@/components/Brand';
-import { Section, SectionHeading, LinkCard, ButtonLink } from '@/components/ui';
+import { Section, SectionHeading, ButtonLink, PillLinks } from '@/components/ui';
 import { ContactBand } from '@/components/ContactCard';
 import { FadeIn, FadeInUp } from '@/components/HeroAnimations';
 import { pageGraph } from '@/lib/schema';
 import { pageMeta } from '@/lib/meta';
 import { PERSON_NAME, SITE_NAME, CONTACT, ADDRESS_ONE_LINE } from '@/lib/site';
-import { PROFILE, DISCIPLINES, SECTORS, LOCATIONS, insightsByDate, paths, sinceLine, type KentRegion } from '@/lib/content';
+import { PROFILE, DISCIPLINES, paths, sinceLine, orgLabel } from '@/lib/content';
 
 export const metadata: Metadata = pageMeta({
-  title: `${PERSON_NAME} | ${SITE_NAME}`,
+  title: `${PERSON_NAME} CMIOSH, Health and Safety in Kent | ${SITE_NAME}`,
   absoluteTitle: true,
-  description: `The health and safety record of ${PERSON_NAME}: the disciplines he has delivered, the sectors and places he has worked across London and the South East.`,
+  description: `Who ${PERSON_NAME} is and what he has done in health and safety since 2011, across London and the South East.`,
   path: '/',
   type: 'profile',
   og: { title: PERSON_NAME, eyebrow: SITE_NAME, subtitle: 'Health and safety across London and the South East.' },
 });
 
-const REGION_ORDER: KentRegion[] = ['West Kent', 'Mid Kent', 'North Kent', 'East Kent', 'South East London'];
-
 export default function HomePage() {
-  const guides = insightsByDate().slice(0, 3);
   const since = sinceLine();
 
   return (
@@ -36,7 +33,7 @@ export default function HomePage() {
           path: '/',
           type: 'ProfilePage',
           name: `${PERSON_NAME}, ${SITE_NAME}`,
-          description: `The health and safety record of ${PERSON_NAME}.`,
+          description: `Who ${PERSON_NAME} is and what he has done in health and safety.`,
         })}
       />
 
@@ -64,7 +61,7 @@ export default function HomePage() {
                 <circle cx="450" cy="450" r="304" fill="none" stroke="#d4af37" strokeOpacity="0.34" strokeWidth="1.5" strokeDasharray="2 11" />
               </svg>
               <div className="relative">
-                <Emblem size={300} priority shadow fluid className="w-[280px] sm:w-[357px]" />
+                <Emblem size={300} priority shadow fluid quality={95} sizes="(min-width: 640px) 357px, 280px" className="w-[280px] sm:w-[357px]" />
               </div>
             </FadeIn>
 
@@ -78,9 +75,9 @@ export default function HomePage() {
               <h1 className="text-balance text-[2rem] font-semibold leading-[1.08] tracking-[-0.015em] text-white sm:text-[2.75rem] lg:text-[3.25rem]">
                 {PERSON_NAME}
                 {PROFILE.postNominals && <span className="ml-3 align-middle text-[0.45em] font-medium tracking-[0.18em] text-gold">{PROFILE.postNominals}</span>}
-                <span className="mt-2 block text-[1.125rem] font-light leading-snug tracking-normal text-ink-light-muted sm:text-[1.375rem]">{PROFILE.headline}</span>
+                <span className="mt-2 block text-[1.125rem] font-normal leading-snug tracking-normal text-ink-light-muted sm:text-[1.375rem]">{PROFILE.headline}</span>
               </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-pretty text-base font-light leading-relaxed text-ink-light-soft sm:text-lg">{PROFILE.summary}</p>
+              <p className="mx-auto mt-6 max-w-2xl text-pretty text-base font-normal leading-relaxed text-ink-light-soft sm:text-lg">{PROFILE.summary}</p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <ButtonLink href={paths.about}>About Stephen</ButtonLink>
                 <ButtonLink href={paths.contact} variant="secondary-dark">
@@ -119,17 +116,11 @@ export default function HomePage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
           <div>
-            <SectionHeading eyebrow="Who he is" title={`${PROFILE.givenName}, ${since ? `in health and safety ${since}` : 'in health and safety'}`} />
+            <SectionHeading eyebrow="Who he is" title={since ? `In health and safety ${since}` : 'In health and safety'} />
             <div className="space-y-4 text-pretty text-base leading-relaxed text-ink sm:text-[1.0625rem]">
-              {PROFILE.bio.slice(0, 2).map((p, i) => (
+              {PROFILE.bio.slice(0, 3).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
-            </div>
-            <div className="mt-6">
-              <Link href={paths.about} className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink transition hover:text-blue">
-                The full record
-                <span aria-hidden>→</span>
-              </Link>
             </div>
           </div>
           <div className="rounded-lg border border-ink/10 bg-surface-raised p-6">
@@ -138,7 +129,7 @@ export default function HomePage() {
                 <Image src={PROFILE.photo.src} alt={PROFILE.photo.alt} fill sizes="(min-width: 1024px) 28rem, (min-width: 640px) 36rem, 100vw" className="object-cover object-[50%_22%]" />
               </div>
             )}
-            <p className="eyebrow mb-4">Standing in the profession</p>
+            <p className="eyebrow mb-4">In the profession</p>
             <ul className="space-y-3">
               {PROFILE.affiliations.map((a) => (
                 <li key={a.organisation} className="flex items-start gap-3 text-[15px] leading-snug text-ink">
@@ -177,73 +168,38 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ─── Disciplines ───────────────────────────────────────────────── */}
-      <Section raised id="disciplines">
-        <SectionHeading
-          eyebrow="Expertise"
-          title="Disciplines Stephen has delivered"
-          intro="Each discipline has its own page: the law behind it, what Stephen has delivered under it, and the sectors and places where he did so."
-        />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {DISCIPLINES.map((d) => (
-            <LinkCard key={d.slug} href={paths.discipline(d.slug)} title={d.shortTitle} text={d.summary} />
-          ))}
-        </div>
-      </Section>
-
-      {/* ─── Sectors ───────────────────────────────────────────────────── */}
-      <Section id="sectors">
-        <SectionHeading eyebrow="Sectors" title="Sectors he has worked across" intro="The same disciplines, applied on very different sites." />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {SECTORS.map((s) => (
-            <LinkCard key={s.slug} href={paths.sector(s.slug)} title={s.title} text={s.summary} />
-          ))}
-        </div>
-      </Section>
-
-      {/* ─── Locations ─────────────────────────────────────────────────── */}
-      <Section raised id="locations">
-        <SectionHeading eyebrow="Where" title="Where the work was done" intro={`From the office at Nepicar Park, Wrotham, across ${PROFILE.coverage}.`} />
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          {REGION_ORDER.map((region) => {
-            const locs = LOCATIONS.filter((l) => l.region === region);
-            if (!locs.length) return null;
-            return (
-              <div key={region}>
-                <h3 className="eyebrow mb-3 !text-[10px]">{region}</h3>
-                <ul className="space-y-2">
-                  {locs.map((l) => (
-                    <li key={l.slug}>
-                      <Link href={paths.location(l.slug)} className="inline-flex items-start gap-2 text-[15px] font-medium text-ink transition hover:text-blue">
-                        <span aria-hidden className="mt-[9px] h-1.5 w-1.5 shrink-0 rotate-45 bg-gold-deep" />
-                        {l.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-8">
-          <Link href={paths.locations} className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink transition hover:text-blue">
-            All locations
-            <span aria-hidden>→</span>
+      {/* ─── What he knows ─────────────────────────────────────────────── */}
+      <Section raised id="expertise">
+        <SectionHeading eyebrow="Expertise" title="What Stephen knows" intro="Each one has a short page: the law behind it, and what Stephen has done under it." />
+        <PillLinks ariaLabel="Expertise" items={DISCIPLINES.map((d) => ({ href: paths.discipline(d.slug), label: d.shortTitle }))} />
+        <p className="mt-6 text-[15px] leading-relaxed text-ink-muted">
+          He has also written{' '}
+          <Link href={paths.insights} className="font-medium text-gold-ink underline decoration-gold/40 underline-offset-2 hover:text-blue">
+            plain-English guides to health and safety law
           </Link>
-        </div>
+          .
+        </p>
       </Section>
 
-      {/* ─── Guides ────────────────────────────────────────────────────── */}
-      <Section id="guides">
-        <SectionHeading eyebrow="Guides" title={`Guides by ${PROFILE.givenName}`} intro="The law and the practice behind each discipline, written for the people who carry the duties." />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {guides.map((g) => (
-            <LinkCard key={g.slug} href={paths.insight(g.slug)} meta={g.category} title={g.title} text={g.description} />
+      {/* ─── What he has done ─────────────────────────────────────────── */}
+      <Section id="career">
+        <SectionHeading eyebrow="What he has done" title="Career so far" />
+        <ol className="relative max-w-prose border-l border-ink/15 pl-6">
+          {PROFILE.timeline.map((t, i) => (
+            <li key={i} className="relative mb-8 last:mb-0">
+              <span aria-hidden className="absolute -left-[31px] top-[7px] h-2.5 w-2.5 rotate-45 border border-gold-deep bg-surface" />
+              <p className="eyebrow !text-[10px]">{t.period}</p>
+              <p className="mt-1 text-[1.0625rem] font-semibold text-ink">
+                {t.title}
+                {t.organisation && <span className="font-normal text-ink-muted">, {orgLabel(t.organisation)}</span>}
+              </p>
+              <p className="mt-1 text-[15px] leading-relaxed text-ink-muted">{t.detail}</p>
+            </li>
           ))}
-        </div>
+        </ol>
         <div className="mt-8">
-          <Link href={paths.insights} className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink transition hover:text-blue">
-            All guides
+          <Link href={paths.about} className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink transition hover:text-blue">
+            Read more about Stephen
             <span aria-hidden>→</span>
           </Link>
         </div>

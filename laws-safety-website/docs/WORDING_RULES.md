@@ -17,7 +17,7 @@ The test for any sentence: could a reader, or a lawyer, take it as Laws Safety a
 - "we", "our", "us" as the voice of the site (the privacy notice is written in the third person too).
 - Anything from the banned list in `scripts/content-check.mjs`: "we offer", "our services", "services include", "Laws Safety offers", "Laws Safety provides", "hire us", "hire Stephen", "book a", "book Stephen", "get a quote", "free quote", "request a quote", "packages", "pricing", "from £", "available for", "call today", "call now", "let us", "we can help", "how we can help", "contact us to discuss", "discuss your requirements", "no obligation", "competitive rates".
 - What is available, what it costs, how to buy it, how quickly it can start, or any guarantee.
-- A former employer's name, its clients, or its projects, unless `NAME_EMPLOYERS` in `lib/content/profile.ts` is set to true (Stephen's decision under the non-compete). With it false, every employer and client is described by type through `orgLabel()`: "a Kent health and safety consultancy and training provider", "a national housing contractor". Never write a name into copy directly.
+- A former or current employer's name, its clients, or its projects. Not on the site, not in the source, not in a comment. Every employer and client is described by type through `orgLabel()`: "a health and safety consultancy", "a national housing contractor". `npm run content:check` fails the build if a name appears anywhere.
 - Superlatives: "leading", "best", "premier", "expert" as a label.
 - Any fact about Stephen that did not come from Stephen. Every record line traces to his CV; nothing is inferred, nothing is taken from anyone else's website.
 
