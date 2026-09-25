@@ -23,7 +23,7 @@ export default function Footer() {
               <LockUp emblemSize={48} wordmarkWidth={176} />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-light-muted">
-              The health and safety record of {PERSON_NAME}. Disciplines delivered, sectors worked across and the places the work was done, across {PROFILE.coverage}.
+              {PERSON_NAME} CMIOSH. Chartered health and safety professional, based in Wrotham, Kent, and working across {PROFILE.coverage}.
             </p>
             <ul className="mt-6 space-y-2.5 text-sm">
               <li>

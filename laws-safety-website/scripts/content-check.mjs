@@ -13,6 +13,8 @@
  *      docs/WORDING_RULES.md.
  *   3. Leftovers from the template this site was forked from.
  *   4. A card summary or short title over its SERP budget.
+ *   5. The name of a former employer or client, anywhere in the site source,
+ *      the docs or /public, comments included. They are never named.
  *
  * Usage: node scripts/content-check.mjs [--quiet]
  */
@@ -55,6 +57,14 @@ const BANNED = [
 
 /** Strings that must not survive the fork. */
 const LEFTOVERS = ['andrews-recruitment', 'Andrews Recruitment', 'ARG_', 'Manatal', 'IvyLens', 'RecXchange', 'AMIVY', 'Candidate Cloud', '7225C0', '38B6FF'];
+
+/**
+ * Former employers and clients, which must never appear anywhere. Stored
+ * base64-encoded so the names are not written in plain text even here.
+ * Matched case-insensitively, with any spacing or punctuation between words.
+ */
+const FORBIDDEN_NAMES = ['bGlnaHRob3VzZSBzYWZldHk=', 'a2VlIHNhZmV0eQ==', 'd2lsbG1vdHQgZGl4b24='].map((b) => Buffer.from(b, 'base64').toString('utf8'));
+const nameRe = (n) => new RegExp(n.split(' ').map(escapeRe).join('[\\s\\-_.]*'), 'i');
 
 const SCAN_DIRS = ['app', 'components', 'lib'];
 const CONTENT_DIR = 'lib/content';
@@ -113,6 +123,27 @@ for (const file of files) {
     for (const s of LEFTOVERS) {
       if (ln.includes(s)) add('error', file, i + 1, 'template leftover', s);
     }
+  });
+}
+
+// 5. Former employers' names: site source, docs, README and /public text files.
+const NAME_EXT = /\.(ts|tsx|mjs|js|css|md|json|svg|txt|html|webmanifest)$/;
+function walkAll(dir, out = []) {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    const st = statSync(p);
+    if (st.isDirectory()) {
+      if (name === 'node_modules' || name.startsWith('.')) continue;
+      walkAll(p, out);
+    } else if (NAME_EXT.test(name) && !p.endsWith('content-check.mjs') && !name.endsWith('package-lock.json')) {
+      out.push(p);
+    }
+  }
+  return out;
+}
+for (const file of [...walkAll(join(ROOT, 'app')), ...walkAll(join(ROOT, 'components')), ...walkAll(join(ROOT, 'lib')), ...walkAll(join(ROOT, 'docs')), ...walkAll(join(ROOT, 'public')), ...walkAll(join(ROOT, 'scripts')), join(ROOT, 'README.md')]) {
+  readFileSync(file, 'utf8').split('\n').forEach((ln, i) => {
+    for (const n of FORBIDDEN_NAMES) if (nameRe(n).test(ln)) add('error', file, i + 1, 'former employer named', 'employers are never named; describe by type via orgLabel()');
   });
 }
 

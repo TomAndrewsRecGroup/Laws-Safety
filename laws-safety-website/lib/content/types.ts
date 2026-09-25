@@ -35,9 +35,7 @@ export interface TimelineEntry {
 }
 
 export interface Organisation {
-  /** The real name, used only when PROFILE.nameEmployers is true. */
-  name: string;
-  /** How it is described otherwise: "a Kent health and safety consultancy and training provider". */
+  /** How it is described on the site: "a national housing contractor". Never a name. */
   described: string;
 }
 
@@ -54,12 +52,6 @@ export interface Profile {
   familyName: string;
   /** Post-nominals as they follow his name: "CMIOSH". */
   postNominals: string;
-  /**
-   * Whether employers and clients are named on the site (true) or described
-   * by type (false). Stephen's decision, under the non-compete; the default
-   * describes.
-   */
-  nameEmployers: boolean;
   /** Professional bodies and groups: the roles he holds in the profession. */
   affiliations: Affiliation[];
   /** One line under the name: what he is. */
