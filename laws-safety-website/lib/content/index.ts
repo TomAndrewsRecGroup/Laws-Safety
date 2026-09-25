@@ -2,7 +2,7 @@
  * One import for the whole content model.
  */
 export * from './types';
-export { PROFILE, CONSULTANCY, HOUSING_CONTRACTOR, NAME_EMPLOYERS, orgLabel, sinceLine, yearsInSafety } from './profile';
+export { PROFILE, CONSULTANCY, HOUSING_CONTRACTOR, orgLabel, sinceLine, yearsInSafety } from './profile';
 export { DISCIPLINES, getDiscipline } from './disciplines';
 export { SECTORS, getSector } from './sectors';
 export { LOCATIONS, getLocation } from './locations';

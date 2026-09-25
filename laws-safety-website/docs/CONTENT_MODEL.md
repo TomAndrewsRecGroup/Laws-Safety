@@ -10,7 +10,7 @@ The types are in `lib/content/types.ts` and every field has a comment there.
 
 **Record copy** is what Stephen has done: `PROFILE`, every `delivered` list, every location's `projects`, the testimonials, and the FAQ answers about him. It comes only from Stephen, in his words or his CV, and is never inferred; the current record was written from his September 2026 CV. Where something is not yet supplied it is written as a `[[placeholder]]`.
 
-Employers and clients are never written into copy by name. They are `Organisation` records in `profile.ts` (`CONSULTANCY`, `HOUSING_CONTRACTOR`) rendered through `orgLabel()`, which prints the name only when `NAME_EMPLOYERS` is true. That switch is Stephen's decision under the non-compete.
+Employers and clients are never written into copy by name. They are `Organisation` records in `profile.ts` (`CONSULTANCY`, `HOUSING_CONTRACTOR`) that hold a description only, rendered through `orgLabel()`. The names are not stored anywhere in the repo, and `content:check` fails the build if one is added.
 
 ## Stephen's record: what is filled and what is still open
 

@@ -5,13 +5,13 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 import Header from '@/components/Header';
 import JsonLd from '@/components/JsonLd';
 import { Emblem, Wordmark, Diamond } from '@/components/Brand';
-import { Section, SectionHeading, ButtonLink } from '@/components/ui';
+import { Section, SectionHeading, ButtonLink, PillLinks } from '@/components/ui';
 import { ContactBand } from '@/components/ContactCard';
 import { FadeIn, FadeInUp } from '@/components/HeroAnimations';
 import { pageGraph } from '@/lib/schema';
 import { pageMeta } from '@/lib/meta';
 import { PERSON_NAME, SITE_NAME, CONTACT, ADDRESS_ONE_LINE } from '@/lib/site';
-import { PROFILE, paths, sinceLine, orgLabel } from '@/lib/content';
+import { PROFILE, DISCIPLINES, paths, sinceLine, orgLabel } from '@/lib/content';
 
 export const metadata: Metadata = pageMeta({
   title: `${PERSON_NAME} | ${SITE_NAME}`,
@@ -168,8 +168,14 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* ─── What he knows ─────────────────────────────────────────────── */}
+      <Section raised id="expertise">
+        <SectionHeading eyebrow="Expertise" title="What Stephen knows" intro="Each one has a short page: the law behind it, and what Stephen has done under it." />
+        <PillLinks ariaLabel="Expertise" items={DISCIPLINES.map((d) => ({ href: paths.discipline(d.slug), label: d.shortTitle }))} />
+      </Section>
+
       {/* ─── What he has done ─────────────────────────────────────────── */}
-      <Section raised id="career">
+      <Section id="career">
         <SectionHeading eyebrow="What he has done" title="Career so far" />
         <ol className="relative max-w-prose border-l border-ink/15 pl-6">
           {PROFILE.timeline.map((t, i) => (

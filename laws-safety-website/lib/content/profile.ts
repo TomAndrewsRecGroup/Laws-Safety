@@ -5,31 +5,23 @@ import type { Organisation, Profile } from './types';
  * supplied with it (LinkedIn, photo, where the work was done). Nothing here
  * is inferred; every line traces to the CV or to what Stephen supplied.
  *
- * Employers and clients are described by type, not named, unless
- * `nameEmployers` is set to true: that is Stephen's decision under the
- * non-compete, and the site is correct either way.
+ * Employers and clients are never named, anywhere: not on the site and not
+ * in this source. They are described by type only, and
+ * scripts/content-check.mjs fails the build if a name ever appears.
  */
 
-/**
- * Whether employers and clients are named on the site. Stephen's decision
- * under the non-compete; false describes them by type everywhere.
- */
-export const NAME_EMPLOYERS = false;
-
-/** The name of an organisation as the site is allowed to print it. */
+/** How an organisation is printed on the site: by type, never by name. */
 export function orgLabel(org: Organisation): string {
-  return NAME_EMPLOYERS ? org.name : org.described;
+  return org.described;
 }
 
 /** The consultancy and training business Stephen worked in from 2011. */
 export const CONSULTANCY: Organisation = {
-  name: 'Lighthouse Safety Training Ltd',
-  described: 'a Kent health and safety consultancy and training provider',
+  described: 'a health and safety consultancy',
 };
 
 /** The contractor he was seconded to for 18 months. */
 export const HOUSING_CONTRACTOR: Organisation = {
-  name: 'Willmott Dixon Housing',
   described: 'a national housing contractor',
 };
 
@@ -38,11 +30,10 @@ export const PROFILE: Profile = {
   givenName: 'Stephen',
   familyName: 'Laws',
   postNominals: 'CMIOSH',
-  nameEmployers: NAME_EMPLOYERS,
   headline: 'Chartered health and safety professional, based in Kent.',
   jobTitle: 'Health and Safety Professional and General Manager',
   careerStart: 2011,
-  summary: `Stephen has worked in health and safety since 2011. In that time he has helped businesses keep their people safe and stay within the law, both on site and at director level. He is Vice Chair of the Kent Health and Safety Group and of Safety Groups UK.`,
+  summary: `Stephen has worked in health and safety since 2011. He has advised company directors, managed safety on live building sites, investigated accidents and taught courses up to NEBOSH level. He is Vice Chair of the Kent Health and Safety Group and of Safety Groups UK.`,
   bio: [
     `Stephen started out as a plant operator in civil engineering. In February 2011 he moved into health and safety, joining ${orgLabel(CONSULTANCY)} as a consultant. Before long he was teaching courses as well.`,
     'His work has always been about keeping businesses within the law. He has worked directly with owners, directors and senior managers. He has written and checked safety policies, inspected sites, written up what needed fixing, and stayed involved until it was fixed. He has also led accident investigations.',

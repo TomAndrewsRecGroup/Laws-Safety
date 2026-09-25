@@ -22,7 +22,7 @@ Every page family is generated from `lib/content/*`:
 
 | File | Drives |
 |---|---|
-| `profile.ts` | Who Stephen is (from his CV): homepage, `/about`, schema Person, llms.txt, author byline. `NAME_EMPLOYERS` switches employers between named and described |
+| `profile.ts` | Who Stephen is (from his CV): homepage, `/about`, schema Person, llms.txt, author byline. Employers are described by type, never named |
 | `disciplines.ts` | `/expertise` and `/expertise/[slug]` |
 | `sectors.ts` | `/sectors` and `/sectors/[slug]` (the four sectors on his CV) |
 | `locations.ts` | `/locations` and `/locations/[slug]` |
