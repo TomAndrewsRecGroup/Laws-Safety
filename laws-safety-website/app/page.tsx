@@ -14,7 +14,7 @@ import { PERSON_NAME, SITE_NAME, CONTACT, ADDRESS_ONE_LINE } from '@/lib/site';
 import { PROFILE, DISCIPLINES, paths, sinceLine, orgLabel } from '@/lib/content';
 
 export const metadata: Metadata = pageMeta({
-  title: `${PERSON_NAME} | ${SITE_NAME}`,
+  title: `${PERSON_NAME} CMIOSH, Health and Safety in Kent | ${SITE_NAME}`,
   absoluteTitle: true,
   description: `Who ${PERSON_NAME} is and what he has done in health and safety since 2011, across London and the South East.`,
   path: '/',
@@ -172,6 +172,13 @@ export default function HomePage() {
       <Section raised id="expertise">
         <SectionHeading eyebrow="Expertise" title="What Stephen knows" intro="Each one has a short page: the law behind it, and what Stephen has done under it." />
         <PillLinks ariaLabel="Expertise" items={DISCIPLINES.map((d) => ({ href: paths.discipline(d.slug), label: d.shortTitle }))} />
+        <p className="mt-6 text-[15px] leading-relaxed text-ink-muted">
+          He has also written{' '}
+          <Link href={paths.insights} className="font-medium text-gold-ink underline decoration-gold/40 underline-offset-2 hover:text-blue">
+            plain-English guides to health and safety law
+          </Link>
+          .
+        </p>
       </Section>
 
       {/* ─── What he has done ─────────────────────────────────────────── */}

@@ -67,6 +67,7 @@ export function personNode() {
       name: q.name,
       ...(q.year ? { dateCreated: String(q.year) } : {}),
     })),
+    knowsLanguage: 'en-GB',
     ...(PROFILE.linkedin ? { sameAs: [PROFILE.linkedin] } : {}),
   };
 }
@@ -113,7 +114,7 @@ export function websiteNode() {
     '@id': IDS.website,
     url: BASE_URL,
     name: SITE_NAME,
-    description: `The health and safety record of ${PERSON_NAME}.`,
+    description: `${PERSON_NAME} CMIOSH, chartered health and safety professional based in Kent: who he is and what he has done.`,
     publisher: { '@id': IDS.organization },
     about: { '@id': IDS.person },
     inLanguage: 'en-GB',

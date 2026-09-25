@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { ogImageMeta, type OgImageOptions } from './og';
-import { clampDescription, clampTitle } from './seo-title';
+import { clampDescription, clampTitle, TITLE_MAX } from './seo-title';
 import { absoluteUrl } from './site-urls';
 import { SITE_NAME } from './site';
 
@@ -11,7 +11,8 @@ import { SITE_NAME } from './site';
  * than merging it with the root layout's, so the images always go in here.
  */
 export function pageMeta(o: { title: string; description: string; path: string; og?: Partial<OgImageOptions>; type?: 'website' | 'article' | 'profile'; noindex?: boolean; absoluteTitle?: boolean }): Metadata {
-  const title = clampTitle(o.title);
+  // An absolute title carries its own branding, so it gets the full budget.
+  const title = o.absoluteTitle ? clampTitle(o.title, TITLE_MAX) : clampTitle(o.title);
   const description = clampDescription(o.description);
   const url = absoluteUrl(o.path);
   const images = ogImageMeta({ title: o.og?.title ?? o.title, eyebrow: o.og?.eyebrow, tag: o.og?.tag, subtitle: o.og?.subtitle ?? description });
