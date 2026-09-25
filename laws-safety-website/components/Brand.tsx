@@ -4,9 +4,11 @@ import { ASSETS, SITE_NAME } from '@/lib/site';
 
 /**
  * The emblem: the crystal eagle, transparent PNG. `size` is the rendered
- * height in px; width follows the 542:456 ratio.
+ * height in px; width follows the 542:456 ratio. The master is 1626x1368
+ * (3x), so it stays sharp on high-density screens; pass `quality` and
+ * `sizes` where it is shown large.
  */
-export function Emblem({ size = 40, className = '', priority = false, shadow = false, fluid = false }: { size?: number; className?: string; priority?: boolean; shadow?: boolean; fluid?: boolean }) {
+export function Emblem({ size = 40, className = '', priority = false, shadow = false, fluid = false, quality, sizes }: { size?: number; className?: string; priority?: boolean; shadow?: boolean; fluid?: boolean; quality?: number; sizes?: string }) {
   const width = Math.round((size * 542) / 456);
   return (
     <Image
@@ -15,6 +17,8 @@ export function Emblem({ size = 40, className = '', priority = false, shadow = f
       width={width}
       height={size}
       priority={priority}
+      quality={quality}
+      sizes={sizes}
       className={`${shadow ? 'drop-shadow-[0_26px_48px_rgba(0,0,0,0.62)]' : ''} ${fluid ? 'h-auto' : ''} ${className}`}
       style={fluid ? undefined : { width, height: size }}
     />
